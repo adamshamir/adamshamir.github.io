@@ -44,8 +44,14 @@
                     document.getElementById('loader').style.opacity = 0;
 
                     setTimeout(() => {
+
                         document.getElementById('loader').style.display = 'none';
-                        document.getElementById('content').classList.remove('loading');
+                        document.getElementsByTagName('body')[0].classList.remove('loading');
+
+                        setTimeout(() => {
+                            document.getElementsByTagName('body')[0].classList.remove('rendering');
+                        }, 2000);
+
                     }, 1000);
 
                 }
@@ -67,7 +73,7 @@
             display: flex;
             flex-direction: column;
             color: white;
-            overflow: hidden;
+            overflow-x: hidden;
 
             background:
                 radial-gradient(circle at center, rgba(255, 255, 255, 0.15), transparent 60%),
@@ -75,6 +81,7 @@
 
             animation: pageFade 1.5s ease-out;
         }
+
 
         /* rocket layer */
 
@@ -86,13 +93,13 @@
             height: 100%;
             pointer-events: none;
             overflow: hidden;
-            z-index: 0;
+            z-index: 2;
         }
 
         .rocket {
             position: absolute;
             font-size: 40px;
-            opacity: 0.9;
+            opacity: 1;
         }
 
         .rocket.ltr>p {
@@ -342,7 +349,11 @@
         }
 
         /* loading */
-        .loading {
+        .rendering {
+            overflow:hidden !important;
+        }
+
+        .loading>.content{
             display: none;
         }
 
@@ -516,7 +527,7 @@
                 flex-direction: row;
                 gap: 25px;
                 flex-wrap: wrap;
-                padding-top: 60px;
+                padding-top: 40px;
             }
 
             .team {
@@ -558,11 +569,11 @@
     </style>
 </head>
 
-<body onload="loadScores()">
+<body onload="loadScores()" class="loading rendering">
 
     <div id="loader" class="loader"></div>
 
-    <div id="content" class="content loading">
+    <div class="content">
 
 
         <div class="rockets">
