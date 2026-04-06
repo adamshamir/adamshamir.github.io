@@ -43,13 +43,15 @@
 
                     document.getElementById('loader').style.opacity = 0;
 
+                    document.getElementsByClassName('blinking-dot')[0].classList.add('reload');
+
                     setTimeout(() => {
 
                         document.getElementById('loader').style.display = 'none';
                         document.getElementsByTagName('body')[0].classList.remove('loading');
+                        document.getElementsByClassName('blinking-dot')[0].classList.remove('reload');
 
                     }, 1000);
-
                 }
             );
         }
@@ -498,6 +500,11 @@
             vertical-align: middle;
             margin-left: -5px;
             animation: 2s blink ease infinite;
+        }
+
+        .blinking-dot.reload {
+            background: lime;
+            animation: none;
         }
 
         @keyframes blink {
