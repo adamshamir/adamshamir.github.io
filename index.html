@@ -70,11 +70,9 @@
             flex-direction: column;
             color: white;
             overflow: hidden;
-
             background:
                 radial-gradient(circle at center, rgba(255, 255, 255, 0.15), transparent 60%),
                 linear-gradient(135deg, #1e3c72, #2a5298, #6dd5ed);
-
             animation: pageFade 1.5s ease-out;
         }
 
@@ -431,6 +429,10 @@
             white-space: nowrap;
         }
 
+        .team2 {
+            padding-right: 20px;
+        }
+
         /* score */
 
         .score {
@@ -496,7 +498,7 @@
 
             from,
             to {
-                opacity: 0;
+                opacity: 0.25;
             }
 
             50% {
@@ -712,6 +714,10 @@
                 margin-top: -8px;
             }
 
+            .team2 {
+                padding-right: 0;
+            }
+
             .team-name {
                 font-size: 1.4rem;
             }
@@ -793,7 +799,8 @@
             <div class="blinking-dot"></div>
 
             <span>תוצאות בזמן אמת מאליפות</span>
-            <span class="avoidwrap">ליגת שאגת הארי</span>
+            <span class="avoidwrap">האזעקות של ליגת</span>
+            <span class="avoidwrap">שאגת הארי</span>
 
         </footer>
 
