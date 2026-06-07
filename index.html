@@ -16,6 +16,7 @@
             "https://cors.io/?url=",
             "https://api.codetabs.com/v1/proxy?quest="
         ];
+        const consecutiveEventThreashold = 60
 
         function loadScores() {
             fetch(corsProxies[0] + dataUrl, { 
@@ -48,16 +49,26 @@
                                 time: time
                             }
                         }
-                    ).filter(t => t.time > startTime).reduce(
+                    ).filter(
+                        t => t.time > startTime
+                    ).sort(
+                        (t1, t2) => t1.time - t2.time
+                    ).reduce(
                         (a, t) => {
                             if (t.cities.includes(city1name))
-                                a[0] += 1;
+                                if (t.time - a[2] > consecutiveEventThreashold) { //prevent counting multiple events a few seconds apart
+                                    a[0] += 1;
+                                    a[2] = t.time;
+                                }
 
                             if (t.cities.includes(city2name))
-                                a[1] += 1;
+                                if (t.time - a[3] > consecutiveEventThreashold) { //prevent counting multiple events a few seconds apart
+                                    a[1] += 1;
+                                    a[3] = t.time;
+                                }
 
                             return a;
-                        }, [0, 0]);
+                        }, [0, 0, 0, 0]);
 
                     document.getElementById('score1').innerText = t[0];
                     document.getElementById('score2').innerText = t[1];
