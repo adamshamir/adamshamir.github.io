@@ -11,11 +11,32 @@
         const startTime = Date.parse("2026-02-28 06:00:00 GMT") / 1000;
         const city1name = "בנימינה";
         const city2name = "גבעת עדה";
+        const dataUrl = "https://www.tzevaadom.co.il/static/historical/all.json";
+        const corsProxies = [
+            "https://cors.io/?url=",
+            "https://api.codetabs.com/v1/proxy?quest="
+        ];
 
         function loadScores() {
-            fetch("https://api.codetabs.com/v1/proxy?quest=https://www.tzevaadom.co.il/static/historical/all.json").then(
+            fetch(corsProxies[0] + dataUrl, { 
+                    signal: AbortSignal.timeout(5000)
+                }
+            ).catch(
+                error => {
+                    console.log("CORS Proxy timed out, trying next one...");
+                    return  fetch(corsProxies[1] + dataUrl);
+                }
+            ).then(
                 t => t.json()
             ).then(
+                t => {
+                    if (t.body !== undefined)
+                        return JSON.parse(t.body);
+                    else
+                        return t;
+                }
+            )   
+            .then(
                 t => {
                     t = t.map(
                         t => {
@@ -455,6 +476,14 @@
                 glow 2.5s ease-in-out infinite alternate;
         }
 
+        .halftime {
+            font-size: 1.5rem;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
         @keyframes scoreEnter {
             from {
                 transform: scale(0.3);
@@ -738,6 +767,13 @@
             .score {
                 font-size: 4rem;
                 letter-spacing: 5px;
+            }
+
+            .halftime {
+                font-size: 1rem;
+            }
+
+            .scoreBoard {
                 order: 3;
             }
 
@@ -796,14 +832,19 @@
                 <div class="team-name">בנימינה</div>
             </div>
 
-            <div class="score">
-                <span id="score1"></span> : <span id="score2"></span>
+            <div class="scoreBoard">
+                <div class="score">
+                    <span id="score1"></span> : <span id="score2"></span>
+                </div>
+                
+                <div class="halftime"> מחצית 1: 26:24</div>
             </div>
 
             <div class="team team2">
                 <img src="images/Givat Ada.png" alt="סמל גבעת עדה">
                 <div class="team-name">גבעת עדה</div>
             </div>
+
 
         </div>
 
